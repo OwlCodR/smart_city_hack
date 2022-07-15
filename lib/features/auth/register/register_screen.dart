@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_city_hack/constants/constants.dart';
+import 'package:smart_city_hack/features/custom_widgets/custom_widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -21,69 +22,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _fio = ''.obs;
   final _email = ''.obs;
   final _password = ''.obs;
-
-  Widget _customTextFormInput(
-    String hint,
-    Function(String) callback, [
-    bool isPassword = false,
-  ]) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 50),
-      child: TextFormField(
-        style: GoogleFonts.jost(
-          decoration: TextDecoration.none,
-          color: AppConstants.colors.purple,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-        obscureText: isPassword,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(15.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          hintText: hint,
-        ),
-        onChanged: (String? s) {
-          if (s != null) callback(s);
-        },
-        validator: (String? s) {
-          if (s == null || s.isEmpty) {
-            return 'Поле не может быть пустым';
-          }
-          return null;
-        },
-      ),
-    );
-  }
-
-  Widget _registerButton(Function() callback) {
-    return Container(
-      width: 280,
-      height: 50,
-      decoration: ShapeDecoration(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            AppConstants.colors.darkBlue,
-            AppConstants.colors.pink,
-          ],
-        ),
-      ),
-      child: MaterialButton(
-        shape: const StadiumBorder(),
-        child: const Text(
-          'Зарегистрироваться',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        onPressed: callback,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,15 +59,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    _customTextFormInput('Фамилия и имя', (s) {
+                    customTextFormInput('Фамилия и имя', (s) {
                       _fio.value = s;
                     }),
                     const SizedBox(height: 10),
-                    _customTextFormInput('Почта', (s) {
+                    customTextFormInput('Почта', (s) {
                       _email.value = s;
                     }),
                     const SizedBox(height: 10),
-                    _customTextFormInput(
+                    customTextFormInput(
                       'Пароль',
                       (s) {
                         _password.value = s;
@@ -141,25 +79,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            _registerButton(() {
-              if (_formKey.currentState!.validate()) {
-                var url = 'http://45.141.103.37:10000/register';
+            gradientButton(
+              'Зарегистрироваться',
+              () {
+                if (_formKey.currentState!.validate()) {
+                  var url = 'http://45.141.103.37:10000/register';
 
-                return http
-                    .post(
-                      Uri.parse(url),
-                      headers: <String, String>{
-                        'Content-Type': 'application/json; charset=UTF-8',
-                      },
-                      body: jsonEncode(<String, String>{
+                  return http
+                      .post(
+                    Uri.parse(url),
+                    headers: <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    },
+                    body: jsonEncode(
+                      <String, String>{
                         'username': _fio.value,
                         'email': _email.value,
                         'password': _password.value,
-                      }),
-                    )
-                    .then((value) => log('${value.statusCode}'));
-              }
-            }),
+                      },
+                    ),
+                  )
+                      .then((value) {
+                    log('${value.statusCode}');
+                    if (value.statusCode != 200) {
+                      Get.showSnackbar(
+                        const GetSnackBar(
+                          title: 'Ошибка!',
+                          message: 'Проверьте корректность введенных данных.',
+                          isDismissible: true,
+                        ),
+                      );
+                    } else {
+                      // @TODO Send login and save token locally
+                    }
+                  });
+                }
+              },
+            ),
             const SizedBox(height: 10),
             Text.rich(
               TextSpan(
