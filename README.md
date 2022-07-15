@@ -1,6 +1,6 @@
-# smart_city_hack
+# :iphone: Smart City Hack Summer 2022
 
-A new Flutter hackathon project.
+> Мобильное приложение для подростков 14-18 лет для развития нвыков целеполагания, для мотивации и вдохновения. 
 
 ## Getting Started
 
