@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_city_hack/features/auth/auth_screen.dart';
+import 'package:smart_city_hack/features/auth/login/login_screen.dart';
+import 'package:smart_city_hack/features/auth/register/register_screen.dart';
 
 import 'constants/constants.dart';
 
@@ -23,6 +25,14 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: AppConstants.routes.auth,
           page: () => const AuthScreen(),
+        ),
+        GetPage(
+          name: AppConstants.routes.register,
+          page: () => const RegisterScreen(),
+        ),
+        GetPage(
+          name: AppConstants.routes.login,
+          page: () => const LoginScreen(),
         ),
         // GetPage(
         //   name: AppConstants.routes.main,

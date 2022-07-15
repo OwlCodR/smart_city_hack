@@ -25,7 +25,8 @@ class _AppColors {
 
 class _AppRoutes {
   final auth = '/auth';
-  final main = '/main';
+  final register = '/register';
+  final login = '/login';
 }
 
 class _AppKeys {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_city_hack/constants/constants.dart';
-import 'package:smart_city_hack/features/auth/register/register_screen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -12,6 +11,7 @@ class AuthScreen extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 100, maxWidth: 320),
       child: Column(
         children: [
+          const SizedBox(height: 20),
           Text.rich(
             const TextSpan(
               children: <TextSpan>[
@@ -49,7 +49,7 @@ class AuthScreen extends StatelessWidget {
       height: 60,
       child: TextButton(
         onPressed: () {
-          Get.to(const RegisterScreen());
+          Get.toNamed(AppConstants.routes.register);
         },
         child: Text(
           'Вперед к мечте!',
@@ -90,7 +90,7 @@ class AuthScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              const SizedBox(height: 30),
+              const SizedBox(height: 40),
               _titleWidget(),
               const Spacer(),
               _nextButton(),
