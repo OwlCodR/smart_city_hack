@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_city_hack/constants/constants.dart';
@@ -101,7 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   } else {
-                    // @TODO Save token locally
+                    log(value.body);
+                    GetStorage box = GetStorage();
+                    box.write(AppConstants.keys.token, value.body);
+
+                    Get.toNamed(AppConstants.routes.main);
                   }
                 });
               }

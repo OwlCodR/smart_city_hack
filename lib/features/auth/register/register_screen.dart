@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_city_hack/constants/constants.dart';
@@ -83,11 +84,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'Зарегистрироваться',
               () {
                 if (_formKey.currentState!.validate()) {
-                  var url = 'http://45.141.103.37:10000/register';
+                  var url = 'http://45.141.103.37:10000/';
 
-                  return http
+                  http
                       .post(
-                    Uri.parse(url),
+                    Uri.parse(url + 'register'),
                     headers: <String, String>{
                       'Content-Type': 'application/json; charset=UTF-8',
                     },
@@ -110,7 +111,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       );
                     } else {
-                      // @TODO Send login and save token locally
+                      http
+                          .post(
+                        Uri.parse(url + 'login'),
+                        headers: <String, String>{
+                          'Content-Type': 'application/json; charset=UTF-8',
+                        },
+                        body: jsonEncode(
+                          <String, String>{
+                            'email': _email.value,
+                            'password': _password.value,
+                          },
+                        ),
+                      )
+                          .then((value) {
+                        log(value.body);
+                        var box = GetStorage();
+                        box.write(AppConstants.keys.token, value.body);
+
+                        Get.toNamed(AppConstants.routes.main);
+                      });
                     }
                   });
                 }

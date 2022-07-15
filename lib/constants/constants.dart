@@ -27,10 +27,12 @@ class _AppRoutes {
   final auth = '/auth';
   final register = '/register';
   final login = '/login';
+  final main = '/main';
 }
 
 class _AppKeys {
   final isLogined = 'IS_LOGINED';
+  final token = 'TOKEN';
 }
 
 class _AppPaths {}

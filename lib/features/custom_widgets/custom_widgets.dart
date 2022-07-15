@@ -58,7 +58,12 @@ Widget gradientButton(String text, Function() callback) {
       shape: const StadiumBorder(),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white, fontSize: 20),
+        style: GoogleFonts.jost(
+          decoration: TextDecoration.none,
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       onPressed: callback,
     ),
