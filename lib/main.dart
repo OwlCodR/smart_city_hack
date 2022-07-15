@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:smart_city_hack/features/auth/auth_screen.dart';
 import 'package:smart_city_hack/features/auth/login/login_screen.dart';
 import 'package:smart_city_hack/features/auth/register/register_screen.dart';
+import 'package:smart_city_hack/features/main/main_screen.dart';
+import 'package:smart_city_hack/features/profile/profile_screen.dart';
 
 import 'constants/constants.dart';
 
@@ -53,6 +55,14 @@ class _MyAppState extends State<MyApp> {
                 GetPage(
                   name: AppConstants.routes.login,
                   page: () => const LoginScreen(),
+                ),
+                GetPage(
+                  name: AppConstants.routes.main,
+                  page: () => const MainScreen(),
+                ),
+                GetPage(
+                  name: AppConstants.routes.profile,
+                  page: () => const ProfileScreen(),
                 ),
               ],
             );

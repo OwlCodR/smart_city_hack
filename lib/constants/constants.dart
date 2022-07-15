@@ -28,6 +28,7 @@ class _AppRoutes {
   final register = '/register';
   final login = '/login';
   final main = '/main';
+  final profile = '/profile';
 }
 
 class _AppKeys {

@@ -86,6 +86,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (_formKey.currentState!.validate()) {
                   var url = 'http://45.141.103.37:10000/';
 
+                  ////
+                  Get.toNamed(AppConstants.routes.main);
+                  ////
+
                   http
                       .post(
                     Uri.parse(url + 'register'),
